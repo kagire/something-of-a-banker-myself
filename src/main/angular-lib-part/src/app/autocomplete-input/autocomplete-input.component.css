@@ -1,0 +1,12 @@
+.dropdown-list {
+  position: absolute;
+  z-index: 1;
+  width: 200px;
+  max-height: 100px;
+  background: aqua;
+  overflow-y: auto;
+}
+
+.dropdown-item:hover {
+  background: blueviolet;
+}

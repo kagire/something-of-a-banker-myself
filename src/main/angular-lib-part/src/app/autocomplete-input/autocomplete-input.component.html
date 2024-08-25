@@ -1,0 +1,19 @@
+<input id='search'
+       [ngModel]="value"
+       (ngModelChange)="setValue($event)"
+       placeholder="{{placeholder}}"
+       (click)="dropdownVisible = true"
+       type='text'/>
+<div *ngIf="dropdownVisible" class="dropdown-list">
+  <ng-container *ngIf="availableOptions().length > 0">
+    <div class="dropdown-item" *ngFor="let option of availableOptions()" (click)="applyOption(option)">
+      {{valueFromOption(option)}}
+    </div>
+  </ng-container>
+  <ng-container *ngIf="value?.toString()?.length > 0 && availableOptions().length == 0">
+    <p>no options available</p>
+  </ng-container>
+  <ng-container *ngIf="value == null || value?.toString()?.length == 0">
+    <p>start typing something...</p>
+  </ng-container>
+</div>

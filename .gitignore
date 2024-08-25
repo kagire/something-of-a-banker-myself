@@ -1,2 +1,5 @@
 /.idea/
 /target/
+/src/main/angular-lib-part/.editorconfig
+/src/main/angular-lib-part/.angular/
+/src/main/angular-lib-part/node_modules/

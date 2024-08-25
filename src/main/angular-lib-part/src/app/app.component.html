@@ -1,0 +1,17 @@
+<form [formGroup]="testForm" (ngSubmit)="submit()">
+  <label for="input1">Choose item: </label>
+  <autocomplete-input id="input1"
+                      [options]="countries"
+                      [placeholder]="'Start typing...'"
+                      [displayParameter]="'name'"
+                      formControlName="input1"
+                      [filterOption]="'match'">
+  </autocomplete-input>
+
+  <label for="input1">Choose price: </label>
+  <input id="input2" type="number" formControlName="input2">
+
+  <button type="submit" [disabled]="!testForm.valid">Submit</button>
+</form>
+<p>{{info()}}</p>
+<router-outlet></router-outlet>
