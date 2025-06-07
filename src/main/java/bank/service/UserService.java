@@ -42,7 +42,7 @@ public class UserService {
     }
 
     @Transactional
-    @CacheEvict(value = {"userDTO", "userDTOs", "phones", "emails"}, allEntries = true)
+    @CacheEvict(value = {"userDTO", "userDTOs"}, allEntries = true)
     public UserDTO changeEmail(User user, ChangeValueRequest request) {
         EmailData emailData = Optional
             .ofNullable(emailDataRepository.findByEmail(request.getPrevValue()))
@@ -57,7 +57,7 @@ public class UserService {
     }
 
     @Transactional
-    @CacheEvict(value = {"userDTO", "userDTOs", "phones", "emails"}, allEntries = true)
+    @CacheEvict(value = {"userDTO", "userDTOs"}, allEntries = true)
     public UserDTO addEmail(User user, String email) {
         if (emailDataRepository.findByEmail(email) != null)
             throw new IllegalArgumentException("Email already taken!");
@@ -67,7 +67,7 @@ public class UserService {
     }
 
     @Transactional
-    @CacheEvict(value = {"userDTO", "userDTOs", "phones", "emails"}, allEntries = true)
+    @CacheEvict(value = {"userDTO", "userDTOs"}, allEntries = true)
     public UserDTO deleteEmail(User user, String email) {
         List<EmailData> emails = emailDataRepository.findAllByUser(user);
 
@@ -84,7 +84,7 @@ public class UserService {
     }
 
     @Transactional
-    @CacheEvict(value = {"userDTO", "userDTOs", "phones", "emails"}, allEntries = true)
+    @CacheEvict(value = {"userDTO", "userDTOs"}, allEntries = true)
     public UserDTO changePhone(User user, ChangeValueRequest request) {
         PhoneData phoneData = Optional
             .ofNullable(phoneDataRepository.findByPhone(request.getPrevValue()))
@@ -99,7 +99,7 @@ public class UserService {
     }
 
     @Transactional
-    @CacheEvict(value = {"userDTO", "userDTOs", "phones", "emails"}, allEntries = true)
+    @CacheEvict(value = {"userDTO", "userDTOs"}, allEntries = true)
     public UserDTO addPhone(User user, String phone) {
         if (phoneDataRepository.findByPhone(phone) != null)
             throw new IllegalArgumentException("Phone already taken!");
@@ -109,7 +109,7 @@ public class UserService {
     }
 
     @Transactional
-    @CacheEvict(value = {"userDTO", "userDTOs", "phones", "emails"}, allEntries = true)
+    @CacheEvict(value = {"userDTO", "userDTOs"}, allEntries = true)
     public UserDTO deletePhone(User user, String phone) {
         List<PhoneData> emails = phoneDataRepository.findAllByUser(user);
 
