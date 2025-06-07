@@ -13,6 +13,8 @@ import bank.model.entity.PhoneData;
 import bank.model.entity.User;
 import bank.service.converter.UserConverter;
 import lombok.AllArgsConstructor;
+import org.springframework.cache.annotation.CacheEvict;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -29,15 +31,18 @@ public class UserService {
     private final EmailDataRepository emailDataRepository;
     private final UserConverter userConverter;
 
+    @Cacheable(value = "userDTO", key = "#p0")
     public UserDTO getUserDTO(long id) {
         return userConverter.toDto(getUser(id));
     }
 
+    @Cacheable(value = "userDTOs")
     public List<UserDTO> getUserDTOs() {
         return getUsers().stream().map(userConverter::toDto).toList();
     }
 
     @Transactional
+    @CacheEvict(value = {"userDTO", "userDTOs", "phones", "emails"}, allEntries = true)
     public UserDTO changeEmail(User user, ChangeValueRequest request) {
         EmailData emailData = Optional
             .ofNullable(emailDataRepository.findByEmail(request.getPrevValue()))
@@ -52,6 +57,7 @@ public class UserService {
     }
 
     @Transactional
+    @CacheEvict(value = {"userDTO", "userDTOs", "phones", "emails"}, allEntries = true)
     public UserDTO addEmail(User user, String email) {
         if (emailDataRepository.findByEmail(email) != null)
             throw new IllegalArgumentException("Email already taken!");
@@ -61,6 +67,7 @@ public class UserService {
     }
 
     @Transactional
+    @CacheEvict(value = {"userDTO", "userDTOs", "phones", "emails"}, allEntries = true)
     public UserDTO deleteEmail(User user, String email) {
         List<EmailData> emails = emailDataRepository.findAllByUser(user);
 
@@ -77,6 +84,7 @@ public class UserService {
     }
 
     @Transactional
+    @CacheEvict(value = {"userDTO", "userDTOs", "phones", "emails"}, allEntries = true)
     public UserDTO changePhone(User user, ChangeValueRequest request) {
         PhoneData phoneData = Optional
             .ofNullable(phoneDataRepository.findByPhone(request.getPrevValue()))
@@ -91,6 +99,7 @@ public class UserService {
     }
 
     @Transactional
+    @CacheEvict(value = {"userDTO", "userDTOs", "phones", "emails"}, allEntries = true)
     public UserDTO addPhone(User user, String phone) {
         if (phoneDataRepository.findByPhone(phone) != null)
             throw new IllegalArgumentException("Phone already taken!");
@@ -100,6 +109,7 @@ public class UserService {
     }
 
     @Transactional
+    @CacheEvict(value = {"userDTO", "userDTOs", "phones", "emails"}, allEntries = true)
     public UserDTO deletePhone(User user, String phone) {
         List<PhoneData> emails = phoneDataRepository.findAllByUser(user);
 

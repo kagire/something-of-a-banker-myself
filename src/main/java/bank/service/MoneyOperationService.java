@@ -7,6 +7,7 @@ import bank.model.dto.UserDTO;
 import bank.model.entity.Account;
 import bank.model.entity.User;
 import lombok.AllArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -16,6 +17,7 @@ import java.math.RoundingMode;
 import java.time.Duration;
 import java.time.LocalDateTime;
 
+@Slf4j
 @Service
 @AllArgsConstructor
 public class MoneyOperationService {
@@ -54,6 +56,7 @@ public class MoneyOperationService {
             throw new IllegalStateException("cannot do money transfer!");
         }
 
+        log.info("transferred {} rub from {} to {}", amount.doubleValue(), fromUser.getName(), toUser.getName());
         return userService.getUserDTO(fromUser.getId());
     }
 

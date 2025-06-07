@@ -6,13 +6,14 @@ import jakarta.validation.constraints.Size;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.io.Serializable;
 import java.util.concurrent.ThreadLocalRandom;
 
 @Data
 @Entity
 @Table(name = "EMAIL_DATA")
 @NoArgsConstructor
-public class EmailData {
+public class EmailData implements Serializable {
 
     @Id
     @Column(name = "ID")

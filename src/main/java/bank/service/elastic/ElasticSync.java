@@ -10,6 +10,7 @@ import bank.model.entity.User;
 import bank.model.entity.elastic.UserEl;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.cache.annotation.CacheEvict;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -29,6 +30,7 @@ public class ElasticSync {
 
     @Transactional
     @Scheduled(fixedRate = 60_000)
+    @CacheEvict(value = "userEls", allEntries = true)
     public void updateBalances() {
         List<User> users = userRepository.findAll();
 
@@ -50,6 +52,5 @@ public class ElasticSync {
             }).collect(Collectors.toList());
 
         userElRepository.saveAll(elUsers);
-        log.info("Synced {} accounts to Elasticsearch", elUsers.size());
     }
 }

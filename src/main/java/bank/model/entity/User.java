@@ -8,6 +8,7 @@ import jakarta.validation.constraints.Size;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.io.Serializable;
 import java.time.LocalDate;
 import java.util.concurrent.ThreadLocalRandom;
 
@@ -15,7 +16,7 @@ import java.util.concurrent.ThreadLocalRandom;
 @Table(name = "USER")
 @Data
 @NoArgsConstructor
-public class User {
+public class User implements Serializable {
 
     @Id
     @Column(name = "ID")
@@ -29,7 +30,7 @@ public class User {
 
     @Column(name = "PASSWORD", nullable = false)
     @Size(min = 8, max = 500)
-    private String password;
+    private transient String password;
 
     public User(String name, LocalDate dateOfBirth, String password) {
         this.id = ThreadLocalRandom.current().nextLong(1, Long.MAX_VALUE);

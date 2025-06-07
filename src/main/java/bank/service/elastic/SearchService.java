@@ -7,6 +7,7 @@ import co.elastic.clients.elasticsearch._types.query_dsl.Query;
 import co.elastic.clients.elasticsearch.core.SearchResponse;
 import co.elastic.clients.elasticsearch.core.search.Hit;
 import lombok.AllArgsConstructor;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.Pageable;
@@ -22,6 +23,7 @@ public class SearchService {
 
     private final ElasticsearchClient esClient;
 
+    @Cacheable(value = "userEls", key = "'search-' + #p0.hashCode() + '-' + #p1.pageNumber + '-' + #p1.pageSize")
     public Page<UserEl> searchUsers(SearchRequest request, Pageable pageable) {
         List<Query> mustQueries = new ArrayList<>();
 
