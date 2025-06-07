@@ -31,7 +31,6 @@ public class V1_2__insert_default_users extends BaseJavaMigration {
             }
         } catch (Exception e) {
             connection.rollback();
-            e.printStackTrace();
             throw e;
         } finally {
             connection.setAutoCommit(originalAutoCommit);

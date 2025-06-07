@@ -18,6 +18,8 @@ public class GlobalExceptionHandler {
         log.error("Exception caught at URI: {}", request.getRequestURI());
         log.error("{}: {}", ex.getClass().getSimpleName(), ex.getMessage());
 
+        ex.printStackTrace(); //<-- I know it's not cool, just for debug
+
         return switch (ex) {
             case ConstraintViolationException cex ->
                 ResponseEntity.status(HttpStatus.BAD_REQUEST)
@@ -32,11 +34,8 @@ public class GlobalExceptionHandler {
             case BadCredentialsException bex ->
                 ResponseEntity.status(HttpStatus.UNAUTHORIZED)
                     .body(bex.getMessage());
-            default -> {
-                ex.printStackTrace(); //<-- I know it's not cool, just for debug
-                yield ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
-                    .body("Unexpected error: " + ex.getMessage());
-            }
+            default -> ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
+                .body("Unexpected error: " + ex.getMessage());
         };
     }
 }
