@@ -9,6 +9,7 @@ import bank.model.entity.PhoneData;
 import bank.model.entity.User;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Component;
+import org.springframework.transaction.annotation.Transactional;
 
 @Component
 @AllArgsConstructor
@@ -18,6 +19,7 @@ public class UserConverter {
     private final PhoneDataRepository phoneDataRepository;
     private final EmailDataRepository emailDataRepository;
 
+    @Transactional
     public UserDTO toDto(User user) {
         return UserDTO.builder()
             .id(user.getId())

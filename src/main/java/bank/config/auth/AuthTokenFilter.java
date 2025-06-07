@@ -1,7 +1,7 @@
 package bank.config.auth;
 
+import bank.dao.UserRepository;
 import bank.model.entity.User;
-import bank.service.UserService;
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
@@ -21,7 +21,7 @@ import java.util.List;
 public class AuthTokenFilter extends OncePerRequestFilter {
 
     private JwtUtil jwtUtils;
-    private UserService userService;
+    private UserRepository userRepository;
 
     @Override
     protected void doFilterInternal(
@@ -41,7 +41,7 @@ public class AuthTokenFilter extends OncePerRequestFilter {
             String jwt = parseJwt(request);
             if (jwt != null && jwtUtils.validateJwtToken(jwt)) {
                 String username = jwtUtils.getLoginFromToken(jwt);
-                User user = userService.getUserByPhoneOrEmail(username);
+                User user = userRepository.fetchEager(Long.parseLong(username));
                 UsernamePasswordAuthenticationToken authentication =
                     new UsernamePasswordAuthenticationToken(user, null, List.of());
 

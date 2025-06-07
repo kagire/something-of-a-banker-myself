@@ -5,6 +5,7 @@ import org.flywaydb.core.api.migration.Context;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 
 import java.math.BigDecimal;
+import java.math.RoundingMode;
 import java.sql.Connection;
 import java.sql.Date;
 import java.sql.PreparedStatement;
@@ -62,7 +63,7 @@ public class V1_2__insert_default_users extends BaseJavaMigration {
         ) {
             ps.setLong(1, randomId());
             ps.setLong(2, userId);
-            ps.setBigDecimal(3, new BigDecimal(initialDeposit));
+            ps.setBigDecimal(3, new BigDecimal(initialDeposit).setScale(2, RoundingMode.HALF_DOWN));
             ps.executeUpdate();
         }
 
