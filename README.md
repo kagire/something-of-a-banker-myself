@@ -7,6 +7,10 @@ if no local instance - use docker
 ```
 docker run --name postgres -p 5432:5432 -e POSTGRES_PASSWORD=1234 -d postgres
 ```
+then in psql:
+```
+CREATE DATABASE bank;
+```
 
 2) set up elasticsearch  
 disable ssl, if no local instance - use docker
@@ -23,6 +27,9 @@ docker run -d --name redis -p 6379:6379 redis
 4) application start  
 - run prebuilt jar ([relese jar](https://github.com/kagire/something-of-a-banker-myself/releases/tag/v1))
 - or run starter via IDE ([main class](https://github.com/kagire/something-of-a-banker-myself/blob/main/src/main/java/bank/BankApplication.java))
+
+5) access api at
+`http://localhost:8080/swagger-ui/index.html`
 
 ## Notes
 
